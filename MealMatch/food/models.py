@@ -12,7 +12,7 @@ class FoodItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def average_rating(self):
-        from order.models import Review  # Import Review only when needed to prevent circular imports
+        from order.models import Review 
         reviews = self.reviews.all()
         if reviews.exists():
             return round(sum(review.rating for review in reviews) / reviews.count(), 1)

@@ -38,7 +38,6 @@ def is_buyer(user):
 
 
 
- # login(request, user)  # Log the user in automatically
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)

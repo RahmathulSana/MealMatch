@@ -7,7 +7,6 @@
 {% block content %}
 <body class=" bg-gray-50">
 <div class="max-w-4xl mx-auto mt-8">
-    <!-- Header Section -->
     <div class="bg-[#FFFAF4] p-6 rounded-2xl shadow-lg mb-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-2">Reviews for {{ food.name }}</h2>
         <a href="{% url 'order:food_detail' food.id %}" 
@@ -16,7 +15,7 @@
         </a>
     </div>
 
-    <!-- Reviews List -->
+   
     {% if reviews %}
     <div class="space-y-6">
         {% for review in reviews %}
@@ -50,44 +49,9 @@
     </div>
     {% endif %}
 
-    <!-- Back Button -->
-    {% comment %} <div class="text-center mt-8">
-        <a href="{% url 'order:food_detail' food.id %}" 
-           class="inline-block bg-amber-500 hover:bg-amber-600 text-black px-6 py-2 rounded-lg transition">
-            ← Back to Food Details
-        </a>
-    </div> {% endcomment %}
+    
 </div>
 </body>
 {% endblock content %}
 
 
-{% comment %} {% extends "base.html" %}
-
-{% block head %}
-<title>Reviews for {{ food.name }}</title>
-{% endblock head %}
-
-{% block content %}
-
-<h2>Reviews for {{ food.name }}</h2>
-
-{% if reviews %}
-    <ul>
-        {% for review in reviews %}
-            <li>
-                <strong>Rating:</strong> ⭐ {{ review.rating }}/5 <br>
-                <strong>By:</strong> {{ review.user.username }} <br>
-                <strong>Comment:</strong> {{ review.comment|default:"No comment" }} <br>
-                <small>Posted on {{ review.created_at }}</small>
-                <hr>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No reviews yet. Be the first to review!</p>
-{% endif %}
-
-<a href="{% url 'order:food_detail' food.id %}">Back to Food Details</a>
-
-{% endblock content %} {% endcomment %}

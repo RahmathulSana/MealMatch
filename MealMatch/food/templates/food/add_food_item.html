@@ -6,7 +6,7 @@
     <div class="bg-[#AECE85] p-8 rounded-3xl shadow-2xl w-[90%] max-w-4xl flex flex-col md:flex-row items-center 
                 border-4 border-white hover:shadow-2xl transition-shadow duration-300">
 
-        <!-- Left Section (Form) -->
+       
         <div class="w-full md:w-1/2">
             <h2 class="text-2xl font-bold mb-4 text-black text-left md:text-left">Add Food Item</h2>
 
@@ -40,7 +40,7 @@
                 <button type="submit" class="w-full bg-slate-800 text-white py-3 rounded-lg font-semibold hover:bg-slate-900 transition">
                     Add New Item
                 </button>
-                {% comment %} <a href="{% url "food:food_list" %}" class="text-gray-800 hover:text-gray-900 hover:underline transition text-lg">view food list</a> {% endcomment %}
+              
                 <div class="flex justify-center mt-4">
                     <a href="{% url "food:food_list" %}" 
                        class="inline-block px-4 py-2 text-gray-800 text-base font-semibold rounded-md hover:underline transition duration-200 ">
@@ -50,7 +50,7 @@
             </form>
         </div>
 
-        <!-- Right Section (Illustration) -->
+       
         <div class="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
             <img src="{% static 'images/form.png' %}" alt="Food Delivery" 
                  class="w-full max-w-sm rounded-lg shadow-lg">
@@ -61,132 +61,3 @@
 
 
 
-{% comment %} 
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
-<div class="flex justify-center items-center min-h-screen bg-[#E1DDDC] px-4">
-    <div class="bg-[#AECE85] p-8 rounded-3xl shadow-2xl w-[90%] max-w-4xl flex flex-col md:flex-row items-center">
-        
-        <!-- Left Section (Form) -->
-        <div class="w-full md:w-1/2">
-            <h2 class="text-2xl font-bold mb-4 text-black">Add Food Item</h2>
-
-            <form method="POST" enctype="multipart/form-data" class="space-y-4">
-                {% csrf_token %}
-
-                {% for field in form %}
-                <div class="relative">
-                    <label for="{{ field.id_for_label }}" class="block text-black font-semibold mb-1">
-                        {{ field.label }}
-                    </label>
-
-                    {% if field.field.widget.input_type == "file" %}
-                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}"
-                            class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring focus:ring-green-500 outline-none bg-white">
-                    {% else %}
-                        <input type="{{ field.field.widget.input_type }}" 
-                            name="{{ field.name }}" 
-                            id="{{ field.id_for_label }}"
-                            value="{{ field.value|default_if_none:'' }}"
-                            class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring focus:ring-green-500 outline-none"
-                            placeholder="{{ field.label }}">
-                    {% endif %}
-
-                    {% if field.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-                <button type="submit" class="w-full bg-slate-800 text-white py-3 rounded-lg font-semibold hover:bg-slate-900">
-                    Add New Item
-                </button>
-            </form>
-        </div>
-
-        <!-- Right Section (Illustration) -->
-        <div class="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
-            <img src="{% static 'images/form.png' %}" alt="Food Delivery" class="w-full max-w-sm rounded-lg">
-        </div>
-    </div>
-</div>
-{% endblock %} {% endcomment %}
-
-
-
-{% comment %} 
- {% extends "base.html" %}
-{% load static %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
-
-{% block content %}
-<div class="flex justify-center items-center min-h-screen bg-gray-200 px-4">
-    <div class="bg-green-200 p-8 rounded-lg shadow-lg w-full max-w-4xl flex flex-col md:flex-row items-center">
-        
-        <!-- Left Section (Form) -->
-        <div class="w-full md:w-1/2">
-            <h2 class="text-2xl font-bold mb-4 text-black">Add Food Item</h2>
-            <form method="POST" enctype="multipart/form-data" class="space-y-4">
-                {% csrf_token %}
-
-                <div>
-                    <label class="block text-black font-semibold">Food Name</label>
-                    {{ form.name }}
-                </div>
-
-                <div>
-                    <label class="block text-black font-semibold">Quantity</label>
-                    {{ form.quantity }}
-                </div>
-
-                <div>
-                    <label class="block text-black font-semibold">Price</label>
-                    {{ form.price }}
-                </div>
-
-                <div>
-                    <label class="block text-black font-semibold">Location</label>
-                    {{ form.location }}
-                </div>
-
-                <div>
-                    <label class="block text-black font-semibold">Photo</label>
-                    {{ form.photo }}
-                </div>
-
-                <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700">
-                    Add New Item
-                </button>
-            </form>
-        </div>
-
-        <!-- Right Section (Illustration) -->
-        <div class="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
-            <img src="{% static 'images/form.png' %}" alt="Food Delivery" class="w-full max-w-sm rounded-lg shadow-lg">
-        </div>
-    </div>
-</div>
-
-
-{% endblock %}  {% endcomment %}
-
-
-
-
-
-
-{% comment %} {% extends "base.html" %}
-
-{% block content %}
-  <h2>Add Food Item</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add New Item</button>
-  </form>
-  <a href="{% url "food:food_list" %}">back</a>
-{% endblock %} {% endcomment %}

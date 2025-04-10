@@ -5,7 +5,7 @@
 <div class="flex justify-center items-center min-h-screen bg-gray-50 px-4">
     <div class="bg-[#FFFAF4] p-8 rounded-2xl shadow-2xl w-full max-w-5xl">
         
-        <!-- Page Title & Back Button -->
+        
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-green-800">Sold Items</h2>
             <a href="{% url 'food:food_list' %}" 
@@ -14,7 +14,6 @@
             </a>
         </div>
 
-        <!-- Sales Table -->
         <div class="overflow-x-auto">
             <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-green-600 text-white">
@@ -59,33 +58,3 @@
 
 
 
-{% comment %} {% extends "base.html" %}
-
-{% block content %}
-<h2>Sold Items</h2>
-<a href="{% url "food:food_list" %}">back</a>
-<br><br>
-<table border="1">
-    <tr>
-        <th>Buyer</th>
-        <th>Food Item</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-        <th>Status</th>
-    </tr>
-    {% for sale in sales %}
-    <tr>
-        <td>{{ sale.user.username }}</td>  <!-- Buyer -->
-        <td>{{ sale.food_item.name }}</td>  <!-- Food Name -->
-        <td>{{ sale.quantity }}</td>  <!-- Quantity Ordered -->
-        <td>₹{{ sale.total_price }}</td>  <!-- Total Price -->
-        <td>{{ sale.order_status }}</td>  <!-- Order Status -->
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="5">No sales yet.</td>
-    </tr>
-    {% endfor %}
-</table>
-
-{% endblock content %} {% endcomment %}

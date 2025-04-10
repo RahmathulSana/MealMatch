@@ -9,12 +9,12 @@
 <div class="flex items-center justify-center min-h-screen bg-[#FFFAF4]">
     <div class="bg-[#FFFAF4] flex flex-col md:flex-row w-full max-w-4xl">
 
-        <!-- Left Section (Image) -->
+       
         <div class="hidden md:flex items-center justify-start w-[55%] bg-[#FFFAF4] p-8 rounded-l-lg">
             <img src="{% static 'images/Registration.jpg' %}" alt="Registration" class="w-full h-auto max-w-[90%]">
         </div>
 
-        <!-- Right Section (Form) -->
+        
         <div class="w-full md:w-1/2 p-8">
             <h2 class="text-2xl font-bold text-gray-800 text-center">Welcome To MEALMATCH</h2>
             <p class="text-sm text-gray-500 text-center mb-6">Register with your details to get started.</p>
@@ -68,39 +68,7 @@
 </div>
 {% endfor %}
 
-
-                {% comment %} {% for field in form %}
-                    {% if field.name == 'role' %}
-                        <div class="relative">
-                            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium">Role</label>
-                            <select name="{{ field.name }}" class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-slate-500 outline-none" required>
-                                <option value="">Select Role</option>
-                                {% for key, value in field.field.choices %}
-                                    <option value="{{ key }}" {% if field.value == key %}selected{% endif %}>{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                            {% if field.errors %}
-                                <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                    {% else %}
-                        <div class="relative">
-                            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium">{{ field.label }}</label>
-                            <input type="{{ field.field.widget.input_type }}" 
-                                name="{{ field.name }}" 
-                                value="{{ field.value|default_if_none:'' }}"
-                                class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-slate-500 outline-none"
-                                placeholder="{{ field.label }}"
-                                autocomplete="off">
-                            {% if field.errors %}
-                                <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %} {% endcomment %}
-
-                <button type="submit"
-                    class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition font-semibold">
+   <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition font-semibold">
                     Create Account
                 </button>
             </form>
@@ -121,68 +89,6 @@
     </div>
 </div>
 {% endblock content %}
-
-
-
-{% comment %} {% extends "base.html" %}
-{% load static %}
-
-{% block head %}
-<title>Register</title>
-{% endblock head %}
-
-{% block content %}
-<div class="flex items-center justify-center min-h-screen bg-[#FFFAF4]">
-    <div class="bg-[#FFFAF4] flex flex-col md:flex-row w-full max-w-4xl">
-
-        <!-- Left Section (Image) -->
-        <div class="hidden md:flex items-center justify-start w-[55%] bg-[#FFFAF4] p-8 rounded-l-lg">
-            <img src="{% static 'images/Registration.jpg' %}" alt="Registration" class="w-full h-auto max-w-[90%]">
-        </div>
-
-        <!-- Right Section (Form) -->
-        <div class="w-full md:w-1/2 p-8">
-            <h2 class="text-2xl font-bold text-gray-800 text-center">Welcome To MEALMATCH</h2>
-            <p class="text-sm text-gray-500 text-center mb-6">Register with your details to get started.</p>
-
-            <form method="post" class="space-y-2">
-                {% csrf_token %}
-
-                {% for field in form %}
-                <div class="relative">
-                    <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium">{{ field.label }}</label>
-                    
-                    <input type="{{ field.field.widget.input_type }}" 
-                        name="{{ field.name }}" 
-                        value="{{ field.value|default_if_none:'' }}"
-                        class="w-full border rounded-lg p-2 text-sm focus:ring focus:ring-slate-500 outline-none"
-                        placeholder="{{ field.label }}">
-
-                    {% if field.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-                <button type="submit"
-                    class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition font-semibold">
-                    Create Account
-                </button>
-            </form>
-
-            <p class="text-gray-600 text-sm text-center mt-4">
-                Already have an account? 
-                <a href="{% url 'users:login' %}" class="text-green-600 hover:underline">Sign In</a>
-            </p>
-            <a href="{% url "users:home" %}" class="text-gray-800 hover:text-gray-900 hover:underline transition text-sm">back</a>
-        </div>
-
-    </div>
-</div>
-{% endblock content %} {% endcomment %}
-
-
-
 
 
 

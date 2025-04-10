@@ -32,16 +32,16 @@ class OrderDetail(models.Model):
         ('COP', 'Cash on Pickup'),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Buyer
-    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)  # Ordered food
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)  
     quantity = models.PositiveIntegerField()
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
-    payment_status = models.BooleanField(default=False)  # True if successful
-    order_status = models.CharField(max_length=10, choices=ORDER_STATUS, default="pending")  # Track order status
-    upi_id = models.CharField(max_length=50, blank=True, null=True)  # Store if UPI
-    card_number = models.CharField(max_length=16, blank=True, null=True)  # Store if Card
+    payment_status = models.BooleanField(default=False)  
+    order_status = models.CharField(max_length=10, choices=ORDER_STATUS, default="pending") 
+    upi_id = models.CharField(max_length=50, blank=True, null=True)  
+    card_number = models.CharField(max_length=16, blank=True, null=True)
     transaction_date = models.DateTimeField(auto_now_add=True)
      
     def can_cancel(self):
@@ -59,28 +59,3 @@ class OrderDetail(models.Model):
         return f"{self.user.username} - {self.food_item.Item_name} - {self.order_status} - {self.payment_method}"
 
     
-# class Payment(models.Model):
-#     PAYMENT_METHODS = [
-#         ('UPI', 'UPI Payment'),
-#         ('Card', 'Credit/Debit Card'),
-#         ('COP', 'Cash on Pickup'),
-#     ]
-
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Buyer
-#     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)  # Ordered food
-#     quantity = models.PositiveIntegerField()
-#     price_per_item = models.DecimalField(max_digits=10, decimal_places=2)
-#     total_price = models.DecimalField(max_digits=10, decimal_places=2)
-#     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
-#     payment_status = models.BooleanField(default=False)  # True if successful
-#     upi_id = models.CharField(max_length=50, blank=True, null=True)  # Store if UPI
-#     card_number = models.CharField(max_length=16, blank=True, null=True)  # Store if Card
-#     transaction_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"{self.user.username} - {self.food_item.name} - {self.payment_method}"
-    
-
-
-
-

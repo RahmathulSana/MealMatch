@@ -19,11 +19,11 @@ def buyer_dashboard(request):
 @login_required
 @user_passes_test(is_buyer)
 def browse_food(request):
-    query = request.GET.get('search')  # Get the search query from the user
+    query = request.GET.get('search') 
     if query:
-        food_items = FoodItem.objects.filter(Item_name__icontains=query)  # Filter based on food name
+        food_items = FoodItem.objects.filter(Item_name__icontains=query)  
     else:
-        food_items = FoodItem.objects.all()  # Show all food items if no search term is given
+        food_items = FoodItem.objects.all()  
 
     return render(request, 'order/browse_food.html', {'food_items': food_items, 'query': query})
 
@@ -75,7 +75,7 @@ def checkout(request, order_id):
             messages.error(request, "Invalid payment method.")
             return redirect('order:checkout', order_id=order.id)
 
-        # Save payment method before processing
+       
         order.payment_method = payment_method
         order.save()
 
@@ -92,7 +92,6 @@ def process_payment(request, order_id):
     if request.method == "POST":
         payment_method = order.payment_method
 
-        # Simulate payment success
         if payment_method in ["UPI", "Card"]:
             order.payment_status = True
             order.order_status = "paid"
@@ -102,7 +101,7 @@ def process_payment(request, order_id):
 
         order.save()
 
-        return render(request, "order/payment_loading.html", {"order_id": order.id})  # ✅ Redirect to loading page
+        return render(request, "order/payment_loading.html", {"order_id": order.id})  
 
     return render(request, "order/payment.html", {"order": order})
 
@@ -143,7 +142,6 @@ def order_detail(request, order_id):
 @login_required
 @user_passes_test(is_buyer)
 def add_review(request, food_id):
-    # ✅ Make sure the user has an order for this food item
     order = OrderDetail.objects.filter(food_item__id=food_id, user=request.user).first()
 
     if request.method == "POST":
@@ -154,10 +152,9 @@ def add_review(request, food_id):
             messages.error(request, "Invalid rating. Please select a value between 1 and 5.")
             return redirect('order:order_detail', order_id=order.id)
 
-        # ✅ Create a review for the correct FoodItem
         Review.objects.create(
             user=request.user,
-            food=order.food_item,  # 🔥 Now linking to FoodItem, not OrderDetail
+            food=order.food_item,  
             rating=rating,
             comment=comment
         )
@@ -171,42 +168,11 @@ def cancel_order_view(request, order_id):
     order = get_object_or_404(OrderDetail, id=order_id, user=request.user)
 
     if order.order_status == 'Cancelled':
-        messages.warning(request, "Your order has already been canceled.")  # New message for already canceled orders
-    elif hasattr(order, 'cancel_order'):  # Ensure cancel_order method exists
+        messages.warning(request, "Your order has already been canceled.")  
+    elif hasattr(order, 'cancel_order'):  
         order.cancel_order()
         messages.success(request, "Your order has been successfully canceled.")
     else:
         messages.error(request, "Order cancellation period has expired.")
 
     return redirect('order:my_orders')
-# @login_required
-# @user_passes_test(is_buyer)
-# def add_review(request,order_id):
-#     order = get_object_or_404(OrderDetail, id=order_id)
-
-#     if request.method == "POST":
-#         rating = int(request.POST.get("rating"))
-#         comment = request.POST.get("comment")
-
-#         if rating < 1 or rating > 5:
-#             messages.error(request, "Invalid rating. Please select a value between 1 and 5.")
-#             return redirect('order:order_detail', order_id=order.id)
-
-#         Review.objects.create(
-#             user=request.user,
-#             food=order.food_item,
-#             rating=rating,
-#             comment= comment
-#         )
-
-#         messages.success(request, "Review submitted successfully!")
-#         return redirect('order:my_orders')
-
-#     return render(request, 'order/add_review.html', {'order': order})
-
-
-
-
-
-
-
