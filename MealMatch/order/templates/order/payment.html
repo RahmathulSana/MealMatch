@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Complete Payment - {{ order.food_item.name }}</title>
+{% endblock head %}
+
+{% block content %}
+<body class="bg-gray-50">
+<div class="max-w-4xl mx-auto mt-8">
+    <!-- Payment Card -->
+    <div class=" bg-[#FFFAF4] p-8 rounded-2xl shadow-lg">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Complete Your Payment</h2>
+        
+        <!-- Order Summary -->
+        <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Order Summary</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-600">Item:</p>
+                    <p class="font-medium">{{ order.food_item.name }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600">Quantity:</p>
+                    <p class="font-medium">{{ order.quantity }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600">Payment Method:</p>
+                    <p class="font-medium">
+                        {% if order.payment_method == "UPI" %}UPI Payment
+                        {% elif order.payment_method == "Card" %}Credit/Debit Card
+                        {% else %}Cash on Pickup{% endif %}
+                    </p>
+                </div>
+                <div>
+                    <p class="text-gray-600">Total Amount:</p>
+                    <p class="font-bold text-lg">₹{{ order.total_price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Forms -->
+        {% if order.payment_method == "UPI" %}
+        <form method="POST" action="{% url 'order:process_payment' order.id %}" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Enter your UPI ID</label>
+                <input type="text" name="upi_id" pattern=".+@.+" placeholder="example@okbank" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                <p class="mt-2 text-sm text-gray-500">Note: Ensure your UPI ID is correct before proceeding.</p>
+            </div>
+            <button type="submit" 
+                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-bold text-lg transition">
+                Pay Now
+            </button>
+        </form>
+
+        {% elif order.payment_method == "Card" %}
+        <form method="POST" action="{% url 'order:process_payment' order.id %}" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Card Number</label>
+                <input type="text" name="card_number" placeholder="1234 5678 9012 3456" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Expiry Date</label>
+                    <input type="text" name="expiry" placeholder="MM/YY" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">CVV</label>
+                    <input type="text" name="cvv" placeholder="123" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                </div>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-bold text-lg transition">
+                Pay Now
+            </button>
+        </form>
+
+        {% else %}
+        <div class="text-center space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-800 mt-4">Cash on Pickup Selected</h3>
+                <p class="text-gray-600 mt-2">Please pay when you collect your order.</p>
+            </div>
+            <a href="{% url 'order:order_confirmation' order.id %}" 
+               class="inline-block bg-amber-500 hover:bg-amber-600 text-black px-8 py-3 rounded-lg font-bold text-lg transition">
+                Confirm Order
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+{% endblock content %}
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<h2>Complete Your Payment</h2>
+
+{% if order.payment_method == "UPI" %}
+    <form method="POST" action="{% url 'order:process_payment' order.id %}">
+        {% csrf_token %}
+        <label>Enter your UPI ID:</label>
+        <input type="text" name="upi_id" pattern=".+@.+" placeholder="example@okbank" required><br>
+        <button type="submit">Pay Now</button>
+    </form>
+    <p>Note: Ensure your UPI ID is correct before proceeding.</p>
+
+{% elif order.payment_method == "Card" %}
+    <form method="POST" action="{% url 'order:process_payment' order.id %}">
+        {% csrf_token %}
+        <label>Card Number:</label>
+        <input type="text" name="card_number" required><br>
+        <label>Expiry Date:</label>
+        <input type="text" name="expiry" required><br>
+        <button type="submit">Pay Now</button>
+    </form>
+
+{% else %}
+    <p>Cash on Pickup Selected. Proceed to Confirmation.</p>
+    <a href="{% url 'order:order_confirmation' order.id  %}">Confirm Order</a>
+{% endif %}
+
+{% endblock content %}
+ {% endcomment %}
+
+
+
+{% comment %} {% extends "base.html" %}
+{% block content %}
+<h2>Complete Your Payment</h2>
+
+{% if payment_method == "UPI" %}
+    <form method="POST" action="{% url 'order:payment_success' food_id %}">
+        {% csrf_token %}
+        <input type="hidden" name="payment_method" value="{{ payment_method }}">
+        <label>Enter your UPI ID:</label>
+        <input type="text" name="upi_id" pattern=".+@.+"
+               placeholder="example@okbank" required><br>
+        <button type="submit">Pay Now</button>
+    </form>
+    <p>Note: Ensure your UPI ID is correct before proceeding.</p>
+
+{% elif payment_method == "Card" %}
+    <form method="POST" action="{% url 'payment_success' food.id %}">
+        {% csrf_token %}
+        <label>Card Number:</label>
+        <input type="text" name="card_number" required><br>
+        <label>Expiry Date:</label>
+        <input type="text" name="expiry" required><br>
+        <button type="submit">Pay Now</button>
+    </form>
+
+{% else %}
+    <p>Cash on Pickup Selected. Proceed to Confirmation.</p>
+    <a href="{% url 'order:payment_success' food.id %}">Confirm Order</a>
+{% endif %}
+
+{% endblock content %} {% endcomment %}

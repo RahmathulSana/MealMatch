@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Checkout - {{ order.food_item.name }}</title>
+{% endblock head %}
+
+{% block content %}
+<body class=" bg-gray-50">
+<div class="max-w-4xl mx-auto mt-8">
+    <!-- Checkout Card -->
+    <div class="bg-[#FFFAF4] p-6 rounded-2xl shadow-lg">
+        <!-- Food Item Info -->
+        <div class="flex flex-col md:flex-row gap-6 mb-8">
+            <!-- Food Image -->
+            <div class="flex-shrink-0">
+                <img src="{{ order.food_item.photo.url }}" alt="{{ order.food_item.name }}" 
+                     class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+            </div>
+            
+            <!-- Food Details -->
+            <div class="flex-grow">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ order.food_item.name }}</h2>
+                
+                <div class="space-y-2">
+                    <p class="text-gray-700">
+                        <span class="font-semibold">Price per item:</span> 
+                        <span class="bg-black text-white px-2 py-1 rounded-md ml-2">₹{{ order.food_item.price }}</span>
+                    </p>
+                    
+                    <p class="text-gray-700">
+                        <span class="font-semibold">Quantity:</span> 
+                        <span class="ml-2">{{ order.quantity }}</span>
+                    </p>
+                    
+                    <p class="text-gray-700 text-lg mt-4">
+                        <span class="font-bold">Total Price:</span> 
+                        <span class="bg-black text-white px-3 py-1.5 rounded-lg ml-2">₹{{ order.total_price }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <form method="POST" action="{% url 'order:checkout' order.id %}" class="mt-6">
+            {% csrf_token %}
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Select Payment Method:</h3>
+            
+            <div class="space-y-3 mb-6">
+                <label class="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-amber-100 cursor-pointer">
+                    <input type="radio" name="payment_method" value="UPI" required class="h-5 w-5 text-amber-600 focus:ring-amber-500">
+                    <span class="text-gray-700 font-medium">UPI Payment</span>
+                </label>
+                
+                <label class="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-amber-100 cursor-pointer">
+                    <input type="radio" name="payment_method" value="Card" class="h-5 w-5 text-amber-600 focus:ring-amber-500">
+                    <span class="text-gray-700 font-medium">Credit/Debit Card</span>
+                </label>
+                
+                <label class="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-amber-100 cursor-pointer">
+                    <input type="radio" name="payment_method" value="COP" class="h-5 w-5 text-amber-600 focus:ring-amber-500">
+                    <span class="text-gray-700 font-medium">Cash on Pickup</span>
+                </label>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-bold text-lg transition">
+                Proceed to Payment
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+{% endblock content %}
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+
+<img src="{{ order.food_item.photo.url }}" alt="{{ order.food_item.name }}" width="300">
+<h2>{{ order.food_item.name }}</h2>
+<p>Price per item: ₹{{ order.food_item.price }}</p>
+<p>Quantity: {{ order.quantity }}</p>
+<p>Total Price: ₹{{ order.total_price }}</p>
+
+<form method="POST" action="{% url 'order:checkout' order.id %}">
+    {% csrf_token %}
+    <h3>Select Payment Method:</h3>
+    <label><input type="radio" name="payment_method" value="UPI" required> UPI Payment</label><br>
+    <label><input type="radio" name="payment_method" value="Card"> Credit/Debit Card</label><br>
+    <label><input type="radio" name="payment_method" value="COP"> Cash on Pickup</label><br>
+    
+    <button type="submit">Proceed to Payment</button>
+</form>
+
+{% endblock content %} {% endcomment %}
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+
+<img src="{{ order.food_item.photo.url }}" alt="{{ order.food_item.name }}" width="300">
+<h2>{{ order.food_item.name }}</h2>
+<p>Price per item: ₹{{ order.food_item.price }}</p>
+<p>Quantity: {{ order.quantity }}</p>
+<p>Total Price: ₹<span id="total_price">{{ order.total_price }}</span></p>
+
+<form method="POST" action="{% url 'order:payment_method' order.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="quantity" value="{{ order.quantity }}">
+    
+    <button type="submit">Proceed to Pay</button>
+</form>
+
+{% endblock content %} {% endcomment %}
+

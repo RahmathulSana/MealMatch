@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<title>About - MealMatch</title>
+{% endblock head %}
+
+{% block content %}
+<!-- Navbar -->
+<nav class="flex justify-between items-center px-10 py-6 shadow-md">
+    <div class="flex items-center space-x-1">
+        <h1 class="text-2xl font-semibold">MEALMATCH</h1>
+    </div>
+    <ul class="flex space-x-6 text-gray-700 font-medium text-lg  ">
+     <li>
+            <a href="{% url 'users:register' %}" 
+               class="inline-block px-4 py-1 bg-green-600 text-white  rounded-xl hover:bg-green-700 transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+              sign up
+            </a>
+          </li> 
+        <li><a href="{% url "users:home" %}" class="hover:text-green-600">Home</a></li>
+        <li><a href="{% url "users:about" %}" class="hover:text-green-600">About</a></li>
+        <li><a href="{% url "users:contact" %}" class="hover:text-green-600">Contact</a></li>
+        
+    </ul>
+</nav>
+{% comment %} <!-- Hero Section -->
+ <div class="w-full bg-gradient-to-r from-green-50 to-white py-16">
+    <div class=" mx-auto px-6 md:px-20 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">About MealMatch</h2>
+    </div>
+</div>  {% endcomment %}
+
+<!-- Our Mission Section -->
+<section class="w-full bg-white py-16 md:py-24">
+    <div class="container mx-auto px-6 md:px-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-green-600">Our Mission</h3>
+                <p class="text-lg text-gray-800 mt-4 leading-relaxed">
+                    Every year, millions of tons of food are wasted, while millions go hungry. Our goal is to <strong>bridge this gap</strong> 
+                    by providing an easy-to-use platform that allows restaurants, caterers, and individuals to share surplus food.
+                </p>
+            </div>
+            <div class="flex justify-center">
+                <img src="{% static 'images/donation.jpg' %}" alt="Our Mission" 
+                     class="max-w-[300px] w-full h-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="w-full py-16">
+    <div class="container mx-auto px-6 md:px-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="flex justify-center order-2 md:order-1">
+                <img src="{% static 'images/tips.jpg' %}" alt="How It Works" 
+                     class="max-w-[250px] w-3/5 h-auto">
+            </div>
+            <div class="order-1 md:order-2">
+                <h3 class="text-2xl md:text-3xl font-bold text-green-600">How It Works</h3>
+                <p class="text-lg text-gray-800 mt-4 leading-relaxed">
+                    MealMatch makes it simple: <br>
+                    🍽️ <strong>Sellers</strong> list surplus food.<br>
+                    🛒 <strong>Buyers</strong> find & purchase discounted meals.<br>
+                    ✅ <strong>Pickups </strong>ensure food reaches those who need it.<br>
+                    ♻️ <strong>Less Waste, More Impact.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="max-w-4xl mx-auto text-center">
+    <a href="{% url 'users:register' %}" class="mt-10 px-8 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition duration-300 inline-block">
+        Join Our Mission
+    </a>
+
+</div>
+<br>
+
+
+<!-- Footer -->
+<footer class="bg-green-600 text-white py-12 px-6 md:px-20">
+<div class="max-w-6xl mx-auto">
+<!-- Quick Links - Horizontal Layout -->
+<div class="flex flex-col md:flex-row justify-between items-center">
+<!-- Logo/Branding -->
+<div class="flex items-center mb-6 md:mb-0">
+    <span class="text-lg font-bold">MEALMATCH</span>
+</div>
+
+<!-- Horizontal Links -->
+<div class="flex flex-wrap justify-center gap-6 md:gap-8">
+    <a href={% url "users:home" %} class="hover:text-green-300 transition-colors duration-200">Home</a>
+    <a href={% url "users:about" %} class="hover:text-green-300 transition-colors duration-200">About Us</a>
+    <a href= {% url "users:contact" %} class="hover:text-green-300 transition-colors duration-200">Contact</a>
+</div>
+</div>
+
+<!-- Copyright -->
+<div class="border-t border-green-700 mt-8 pt-8 text-center">
+<p class="text-green-200 text-sm">
+    MealMatch © 2025. All rights reserved.
+</p>
+</div>
+</div>
+</footer>
+</body>
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}  
+{% load static %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-0 px-6 py-10 text-center">
+
+    <!-- Order Confirmation Message -->
+    <h2 class="text-3xl font-bold text-green-700">Your Order is Confirmed!</h2>
+    <p class="text-lg text-gray-700 mt-2">Pick up your Order <span class="font-semibold">@ 7 PM</span></p>
+
+    <!-- Thank You Card with GIF -->
+    <div class="bg-[#AECE85] rounded-3xl shadow-2xl p-8 max-w-lg w-full mt-6 text-center border-4 border-white">
+        <img src="{% static 'images/thnkyou.jpeg' %}"alt="Thank You GIF" class="w-32 mx-auto mb-4 rounded-lg shadow-lg">
+
+        <h3 class="text-2xl font-bold text-black">Thank You for Your Support!</h3>
+        <p class="text-gray-900 mt-3 leading-relaxed font-serif">
+            You're making a difference! Your contribution helps provide meals to those in need. <br> 
+            Thank you for saving surplus food and preventing waste. 💚
+        </p>
+    </div>
+
+    <!-- Back to Browse Button -->
+    <a href="{% url 'order:browse_food' %}" 
+       class="mt-6 bg-slate-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-slate-900 transition">
+       Back to Browse
+    </a>
+
+</div>
+{% endblock content %}
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<h2>Your Order is Confirmed!</h2>
+<p>Pick up your Order @ 7PM</p>
+
+
+<div class="thank-you-card">
+    <p>You're making a difference! Your contribution helps provide meals to those in need.Thank you for saving surplus food and preventing waste.
+    </p>
+</div>
+
+<a href="{% url 'order:browse_food' %}" class="btn btn-primary">Back to Browse</a>
+
+{% endblock content %} {% endcomment %}
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<h2>Your Order is Confirmed!</h2>
+<p>Thank you for saving surplus food and preventing waste.</p>
+<div class="thank-you-card">
+    <p>You're making a difference! Your contribution helps provide meals to those in need.</p>
+</div>
+<a href="{% url 'order:browse_food' %}" class="btn btn-primary">Back</a>
+{% endblock content %} {% endcomment %}

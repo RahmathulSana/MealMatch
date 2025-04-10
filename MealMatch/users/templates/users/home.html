@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head  %}<title>MealMatch - Home</title>{% endblock head %}
+    
+{% block content %}
+
+<body class="font-sans">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center px-10 py-6 shadow-md">
+        <div class="flex items-center space-x-1">
+            <h1 class="text-2xl font-semibold">MEALMATCH</h1>
+        </div>
+        <ul class="flex space-x-6 text-gray-700 font-medium text-lg  ">
+         <li>
+                <a href="{% url 'users:register' %}" 
+                   class="inline-block px-4 py-1 bg-green-600 text-white  rounded-xl hover:bg-green-700 transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                  sign up
+                </a>
+              </li> 
+            <li><a href="{% url "users:home" %}" class="hover:text-green-600">Home</a></li>
+            <li><a href="{% url "users:about" %}" class="hover:text-green-600">About</a></li>
+            <li><a href="{% url "users:contact" %}" class="hover:text-green-600">Contact</a></li>
+            
+        </ul>
+    </nav>
+
+    <!-- Navbar -->
+    {% comment %} <nav class="flex justify-between items-center px-6 md:px-20 py-4 bg-white shadow-md">
+        <div class="flex items-center space-x-1">
+            <h1 class="text-lg font-bold text-gray-800">MEALMATCH</h1>
+        </div>
+        <ul class="flex space-x-6 text-gray-700">
+            <li><a href="#" class="hover:text-green-600 font-medium">Home</a></li>
+            <li><a href="#" class="hover:text-green-600 font-medium">About</a></li>
+            <li><a href="#" class="hover:text-green-600 font-medium">Contact</a></li>
+            <li><a href="#" class="hover:text-green-600 font-medium">FAQs</a></li>
+        </ul>
+    </nav> {% endcomment %}
+
+    <!-- Hero Section -->
+    <section class="px-6 md:px-20 py-16 bg-gradient-to-r from-green-50 to-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 leading-tight">
+                MealMatch is reducing food loss and waste through surplus food redistribution
+            </h2>
+            <div class="flex flex-col md:flex-row items-center justify-between mt-12 space-y-8 md:space-y-0">
+                <img src="{% static 'images/cook.png' %}" alt="Chef" class="w-full md:w-2/6 max-w-md rounded-lg shadow-lg">
+                <div class="md:w-1/2 text-left md:pl-10">
+                    <h3 class="text-green-600 text-xl font-bold">OUR GOAL</h3>
+                    <p class="text-2xl font-semibold text-gray-800 mt-2">Solving The Barriers Between Excess And Scarcity</p>
+                    <p class="mt-4 text-gray-600 leading-relaxed">
+                        Every year, India loses 67 million tonnes of food. Let's turn waste into hope and nourish every plate.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="px-6 md:px-20 py-16 bg-white">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 leading-tight">
+                    <span class="block">Stop Wasting, Start Sharing.</span>
+                    <span class="block mt-4">Feed Lives, Not Landfills.</span>
+                    <span class="block mt-4">Together, We Can End Hunger</span>
+                </h3>
+                <p class="mt-6 text-lg text-gray-600">Together, we can make every meal matter.</p>
+            </div>
+            <div class="md:w-1/2 mt-8 mr-20 md:mt-0 flex justify-center md:justify-end">
+                <img src="{% static 'images/Eating.png' %}" 
+                     alt="People Sharing Food" 
+                     class="w-1/4 md:w-96">
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="px-6 md:px-20 py-16 bg-green-50">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12">Tips to minimize food waste</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                    <span class="text-2xl mr-4">📋</span>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">Create a Meal Plan</h4>
+                        <p class="mt-2 text-gray-600">Plan your weekly meals to buy only what you need</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                    <span class="text-2xl mr-4">🍳</span>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">Cook what you need</h4>
+                        <p class="mt-2 text-gray-600">Prepare appropriate portion sizes to avoid leftovers</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                    <span class="text-2xl mr-4">📦</span>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">Stock frequent use items</h4>
+                        <p class="mt-2 text-gray-600">Keep pantry staples organized and visible</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                    <span class="text-2xl mr-4">♻️</span>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">Use leftovers</h4>
+                        <p class="mt-2 text-gray-600">Get creative with repurposing meals</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                    <span class="text-2xl mr-4">🌱</span>
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-800">Compost</h4>
+                        <p class="mt-2 text-gray-600">Turn food scraps into nutrient-rich soil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="px-6 md:px-20 py-16 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <blockquote class="text-xl text-gray-700 italic leading-relaxed">
+                "Every morsel of food has the power to nourish lives, yet millions go hungry while surplus food is wasted. By redistributing excess, we bridge the gap between abundance and need, transforming waste into hope. Together, we can create a world where food is shared, not discarded, and hunger becomes history."
+            </blockquote>
+            <a href="{% url 'users:register' %}" class="mt-10 px-8 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition duration-300 inline-block">
+                Join Our Mission
+            </a>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+<!-- Footer -->
+<footer class="bg-green-600 text-white py-12 px-6 md:px-20">
+    <div class="max-w-6xl mx-auto">
+        <!-- Quick Links - Horizontal Layout -->
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <!-- Logo/Branding -->
+            <div class="flex items-center mb-6 md:mb-0">
+                <span class="text-lg font-bold">MEALMATCH</span>
+            </div>
+            
+           <!-- Horizontal Links -->
+<div class="flex flex-wrap justify-center gap-6 md:gap-8">
+    <a href={% url "users:home" %} class="hover:text-green-300 transition-colors duration-200">Home</a>
+    <a href={% url "users:about" %} class="hover:text-green-300 transition-colors duration-200">About Us</a>
+    <a href= {% url "users:contact" %} class="hover:text-green-300 transition-colors duration-200">Contact</a>
+</div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-green-700 mt-8 pt-8 text-center">
+            <p class="text-green-200 text-sm">
+                MealMatch © 2025. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+</body>
+{% endblock content %}
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+{% block head  %}<title>MealMatch - Home</title>{% endblock head %}
+    
+ {% block content %}
+
+<body class="font-sans">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center px-10 py-4 shadow-md">
+        <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 bg-green-500 rounded-full"></div>
+            <h1 class="text-lg font-semibold">MEALMATCH</h1>
+        </div>
+        <ul class="flex space-x-6 text-gray-700">
+            <li><a href="#" class="hover:text-green-600">Home</a></li>
+            <li><a href="#" class="hover:text-green-600">About</a></li>
+            <li><a href="#" class="hover:text-green-600">Contact</a></li>
+            <li><a href="#" class="hover:text-green-600">FAQs</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="text-center px-6 py-10">
+        <h2 class="text-2xl font-semibold">MealMatch is reducing food loss and waste through surplus food redistribution</h2>
+        <div class="flex flex-col md:flex-row items-center justify-center mt-6">
+            <img src="{% static 'images/cook.png' %}" alt="Chef" class="w-1/4 max-w-sm">
+            <div class="text-left md:ml-6">
+                <h3 class="text-green-600 text-xl font-bold">OUR GOAL</h3>
+                <p class="italic text-gray-600">Solving The Barriers Between Excess And Scarcity</p>
+                <p class="mt-2 text-gray-700">Every year, India loses 67 million tonnes of food. Let's turn waste into hope and nourish every plate.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t border-gray-300 my-6">
+    <section class="px-6 py-12 md:px-20">
+        <!-- Text and Image Container -->
+        <div class="flex flex-col md:flex-row items-start justify-between">
+            <!-- Left-aligned Text Content -->
+            <div class="md:w-2/3">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 leading-tight">
+                    <span class="block">Stop Wasting, Start Sharing.</span>
+                    <span class="block mt-3">Feed Lives, Not Landfills.</span>
+                    <span class="block mt-3">Together, We Can End Hunger</span>
+                </h3>
+                <p class="mt-4 text-lg text-gray-600">Together, we can make every meal matter.</p>
+            </div>
+            
+            <!-- Right-aligned Image -->
+            <div class="md:w-1/3 mt-6 md:mt-0 flex justify-end">
+                <img src="{% static 'images/Eating.png' %}" 
+                     alt="People Sharing Food" 
+                     class="w-10 md:w-10">
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="px-10 py-10">
+        <h3 class="text-xl font-semibold text-center">Tips to minimize food waste</h3>
+        <div class="flex flex-col items-center space-y-3 mt-4">
+            <p>📋 <strong>Create a Meal Plan</strong></p>
+            <p>🍳 <strong>Cook what you need</strong></p>
+            <p>📦 <strong>Stock frequent use items</strong></p>
+            <p>♻️ <strong>Use leftovers</strong></p>
+            <p>🌱 <strong>Compost</strong></p>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="text-center px-10 py-10">
+        <blockquote class="text-gray-700 italic">
+            "Every morsel of food has the power to nourish lives, yet millions go hungry while surplus food is wasted. By redistributing excess, we bridge the gap between abundance and need, transforming waste into hope. Together, we can create a world where food is shared, not discarded, and hunger becomes history."
+        </blockquote>
+        <button class="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Sign In</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-200 py-10 px-10">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <p class="font-semibold">SOCIAL</p>
+                <div class="flex space-x-4 mt-2">
+                    <a href="#"><img src="twitter-icon.png" class="w-6"></a>
+                    <a href="#"><img src="instagram-icon.png" class="w-6"></a>
+                    <a href="#"><img src="facebook-icon.png" class="w-6"></a>
+                    <a href="#"><img src="youtube-icon.png" class="w-6"></a>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold">QUICK LINKS</p>
+                <ul class="mt-2 text-sm text-gray-700 space-y-2">
+                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="#">CONTACT US</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">PRIVACY POLICY</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</body>
+{% endblock content %}    {% endcomment %}

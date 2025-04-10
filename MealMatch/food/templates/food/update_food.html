@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-50">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg">
+
+        <!-- Header -->
+        <h2 class="text-2xl font-bold text-green-800 mb-4 text-center">Update Food Item</h2>
+
+        <!-- Image Preview -->
+        {% if food_item.photo %}
+            <img src="{{ food_item.photo.url }}" 
+                 alt="{{ food_item.Item_name }}" 
+                 class="w-full h-1/4 object-cover rounded-lg shadow-md mb-4">
+        {% else %}
+            <p class="text-gray-500 italic text-center mb-4">No image available.</p>
+        {% endif %}
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <div class="space-y-1">
+                <label class="block font-semibold text-gray-700">Name</label>
+                {{ form.Item_name }}
+            </div>
+
+            <div class="space-y-1">
+                <label class="block font-semibold text-gray-700">Quantity</label>
+                {{ form.quantity }}
+            </div>
+
+            <div class="space-y-1">
+                <label class="block font-semibold text-gray-700">Price</label>
+                {{ form.price }}
+            </div>
+
+            <div class="space-y-1">
+                <label class="block font-semibold text-gray-700">Location</label>
+                {{ form.location }}
+            </div>
+
+            <div class="space-y-1">
+                <label class="block font-semibold text-gray-700">Photo</label>
+                {{ form.photo }}
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-4">
+                <button type="submit" 
+                        class="w-full bg-green-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition">
+                    Update Item
+                </button>
+                <a href="{% url 'food:food_detail' food_item.id %}" 
+                   class="w-full bg-yellow-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition text-center">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+

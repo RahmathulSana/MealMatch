@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-50">
+    <div class="bg-[#FFFAF4] p-8 rounded-2xl shadow-2xl w-full max-w-5xl flex flex-col md:flex-row">
+        
+        <!-- Left Section (Food Items List & Actions) -->
+        <div class="w-full md:w-3/5">
+            <h2 class="text-2xl font-bold text-green-800 mb-4">Your Listed Food Items</h2>
+
+            <!-- Small Buttons Row -->
+            <div class="flex space-x-6 mb-6">
+                <a href="{% url 'food:add_food_item' %}" 
+                   class="inline-flex items-center bg-[#b2d486] text-white px-4 py-2 text-sm rounded-md font-medium shadow-md hover:bg-[#a5cb74] transition">
+                   ➕ Add New Item
+                </a>
+
+                <a href="{% url 'food:sales' %}" 
+                   class="inline-flex items-center bg-[#42aff3] text-white px-4 py-2 text-sm rounded-md font-medium shadow-md hover:bg-[#34a1e4] transition">
+                   📊 View Sales
+                </a>
+
+                <a href="{% url 'users:logout' %}" 
+                   class="inline-flex items-center bg-[#f5674e] text-white px-4 py-2 text-sm rounded-md font-medium shadow-md hover:bg-[#d8553d] transition">
+                   🚪 Logout
+                </a>
+            </div>
+
+            <p class="text-gray-700 text-sm font-medium mb-4">Logged in as: 
+                <span class="text-black font-semibold">{{ request.user }}</span>
+            </p>
+
+            <!-- Food Items List -->
+            <ul class="space-y-2">
+                {% for item in food_items %}
+                    <li>
+                        <a href="{% url 'food:food_detail' item.id %}" 
+                           class="block bg-gray-100 hover:bg-gray-200 text-green-800 font-semibold p-3 rounded-lg shadow-sm transition">
+                           🍽 {{ item.Item_name }}-{{item.created_at}}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="text-gray-600">No food items available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right Section (Illustration) -->
+        <div class="hidden md:flex md:w-2/5 justify-center items-center">
+            <img src="{% static 'images/Eating2.png' %}" 
+                 alt="Food Listing Illustration" 
+                 class="w-full max-w-sm rounded-lg">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-[#f0eded]">
+    <div class="bg-[#FFFAF4] p-8 rounded-2xl shadow-2xl w-full max-w-5xl flex flex-col md:flex-row items-center">
+        
+        <!-- Left Section (Food Items List & Actions) -->
+        <div class="w-full md:w-3/5">
+            <h2 class="text-2xl font-bold text-green-800 mb-6">Your Listed Food Items</h2>
+
+            <div class="space-y-4">
+                <a href="{% url 'food:add_food_item' %}" 
+                   class="block text-center w-full bg-green-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-green-700 transition">
+                   ➕ Add New Item
+                </a>
+
+                <a href="{% url 'food:sales' %}" 
+                   class="block text-center w-full bg-blue-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">
+                   📊 View Sales
+                </a>
+
+                
+
+                <a href="{% url 'users:logout' %}" 
+                   class="block text-center w-full bg-red-500 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-red-600 transition">
+                   🚪 Logout
+                </a>
+                <p class="text-gray-700 text-sm font-medium">Logged in as: <span class="text-black font-semibold">{{ request.user }}</span></p>
+            </div>
+
+            <ul class="mt-6 space-y-2">
+                {% for item in food_items %}
+                    <li>
+                        <a href="{% url 'food:food_detail' item.id %}" 
+                           class="block bg-gray-100 hover:bg-gray-200 text-green-800 font-semibold p-3 rounded-lg shadow-sm transition">
+                           🍽 {{ item.name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="text-gray-600">No food items available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right Section (Illustration) -->
+        <div class="hidden md:flex md:w-2/5 justify-center items-center">
+            <img src="{% static 'images/Eating2.png' %}" 
+                 alt="Food Listing Illustration" 
+                 class="w-full max-w-sm rounded-lg">
+        </div>
+    </div>
+</div>
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Listed Food Items</h2>
+<a href="{% url 'food:add_food_item' %}">Add New Item</a>
+<a href="{% url "food:sales" %}">View sales</a>
+<p>Logged in as : {{request.user}}</p>
+<a href="{% url 'users:logout' %}">Logout</a>
+<ul>
+    {% for item in food_items %}
+        <li>
+            <a href="{% url 'food:food_detail' item.id %}">{{ item.name }}</a>  <!-- Clickable link -->
+        </li>
+    {% empty %}
+        <li>No food items available.</li>
+    {% endfor %}
+</ul>
+{% endblock %} {% endcomment %}

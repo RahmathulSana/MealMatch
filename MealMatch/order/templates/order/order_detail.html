@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Display Django Messages -->
+{% if messages %}
+    <div class="max-w-md mx-auto mb-4">
+        {% for message in messages %}
+            <div class="p-4 rounded-md 
+                {% if message.tags == 'success' %} bg-green-100 text-green-700 border border-green-300 
+                {% elif message.tags == 'error' %} bg-red-100 text-red-700 border border-red-300 
+                {% elif message.tags == 'warning' %} bg-yellow-100 text-yellow-700 border border-yellow-300 
+                {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="min-h-screen bg-gray-50 p-4">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Order Details</h3>
+        
+        <ul class="space-y-3 mb-8">
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Food Item:</span>
+                <span class="text-gray-800">{{ order.food_item.Item_name }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Quantity:</span>
+                <span class="text-gray-800">{{ order.quantity }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Price per Item:</span>
+                <span class="text-gray-800">₹{{ order.price_per_item }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Total Price:</span>
+                <span class="text-lg font-bold text-gray-900">₹{{ order.total_price }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Payment Method:</span>
+                <span class="text-gray-800">{{ order.payment_method }}</span>
+            </li>
+        </ul>
+
+        <!-- Order Canceled Message -->
+        {% if order.status == 'Cancelled' %}
+            <div class="p-4 bg-red-100 text-red-700 border border-red-300 rounded-md">
+                Your order has been canceled.
+            </div>
+        {% elif order.can_cancel %}
+            <!-- Cancel Order Button with Confirmation -->
+            <form method="post" action="{% url 'order:cancel_order' order.id %}" id="cancelOrderForm">
+                {% csrf_token %}
+                <button type="button" onclick="confirmCancel()" 
+                        class="text-gray-700 hover:text-gray-900 hover:underline self-center font-semibold">
+                    Cancel Order
+                </button>
+            </form>
+            {% elif order.status == 'pending' and not order.can_cancel %}
+            <div class="p-4 bg-yellow-100 text-yellow-700 border border-yellow-300 rounded-md">
+                Sorry! You cannot cancel this order. Orders can only be cancelled within one hour after placing the order.
+            </div>
+
+        {% endif %}
+        
+        <br>
+        <div class="flex justify-between">
+            <a href="{% url 'order:add_review' order.food_item.id %}" 
+               class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg transition">
+                Add Review
+            </a>
+            <a href="{% url 'order:my_orders' %}" 
+               class="text-amber-600 hover:text-amber-800 hover:underline self-center">
+                ← Back to Orders
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Confirmation -->
+<script>
+    function confirmCancel() {
+        if (confirm("Are you sure you want to cancel this order?")) {
+            document.getElementById("cancelOrderForm").submit();
+        }
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen  bg-gray-50 p-4">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Order Details</h3>
+        
+        <ul class="space-y-3 mb-8">
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Food Item:</span>
+                <span class="text-gray-800">{{ order.food_item.name }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Quantity:</span>
+                <span class="text-gray-800">{{ order.quantity }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Price per Item:</span>
+                <span class="text-gray-800">₹{{ order.price_per_item }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Total Price:</span>
+                <span class="text-lg font-bold text-gray-900">₹{{ order.total_price }}</span>
+            </li>
+            <li class="flex justify-between border-b pb-2">
+                <span class="font-medium text-gray-700">Payment Method:</span>
+                <span class="text-gray-800">{{ order.payment_method }}</span>
+            </li>
+        </ul>
+        {% if order.status == 'Cancelled' %}
+        <div class="p-4 bg-red-100 text-red-700 border border-red-300 rounded-md">
+            Your order has been canceled.
+        </div>
+    {% elif order.can_cancel %}
+        <form method="post" action="{% url 'order:cancel_order' order.id %}" id="cancelOrderForm">
+            {% csrf_token %}
+            <button type="button" onclick="confirmCancel()"
+                    class="text-gray-700 hover:text-gray-900 hover:underline self-center font-semibold">
+                Cancel Order
+            </button>
+        </form>
+    {% endif %}
+    <br>
+        <div class="flex justify-between">
+            <a href="{% url 'order:add_review' order.food_item.id %}" 
+               class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg transition">
+                Add Review
+            </a>
+            <a href="{% url 'order:my_orders' %}" 
+               class="text-amber-600 hover:text-amber-800 hover:underline self-center">
+                ← Back to Orders
+            </a>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+{% comment %} <script>
+    function confirmCancel() {
+        if ("{{ order.order_status }}" === "Cancelled") {
+            alert("Your order has already been canceled.");
+        } else {
+            if (confirm("Are you sure you want to cancel this order?")) {
+                document.getElementById("cancelOrderForm").submit();
+            }
+        }
+    }
+</script> {% endcomment %}
+{% comment %} {% endblock %} {% endcomment %}
+
+{% comment %} <h3>Order Details</h3>
+<ul>
+    <li>Food Item: {{ order.food_item.name }}</li>
+    <li>Quantity: {{ order.quantity }}</li>
+    <li>Price per Item: ₹{{ order.price_per_item }}</li>
+    <li>Total Price: ₹{{ order.total_price }}</li>
+    <li>Payment Method: {{ order.payment_method }}</li>
+</ul>
+
+<!-- Add Review Button -->
+<a href="{% url 'order:add_review' order.food_item.id %}">Add Review</a>
+<a href="{% url "order:my_orders" %}">back</a>
+ {% endcomment %}

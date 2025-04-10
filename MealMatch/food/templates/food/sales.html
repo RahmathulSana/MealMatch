@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-50 px-4">
+    <div class="bg-[#FFFAF4] p-8 rounded-2xl shadow-2xl w-full max-w-5xl">
+        
+        <!-- Page Title & Back Button -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-green-800">Sold Items</h2>
+            <a href="{% url 'food:food_list' %}" 
+            class="text-blue-600 hover:text-blue-800 hover:underline transition text-lg">
+            ← Back
+            </a>
+        </div>
+
+        <!-- Sales Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-green-600 text-white">
+                    <tr>
+                        <th class="p-3 text-left">Buyer</th>
+                        <th class="p-3 text-left">Food Item</th>
+                        <th class="p-3 text-left">Quantity</th>
+                        <th class="p-3 text-left">Total Price</th>
+                        <th class="p-3 text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in sales %}
+                    <tr class="border-b hover:bg-gray-100 transition">
+                        <td class="p-3">{{ sale.user.username }}</td>
+                        <td class="p-3">{{ sale.food_item.Item_name }}</td>
+                        <td class="p-3">{{ sale.quantity }}</td>
+                        <td class="p-3 font-semibold text-green-700">₹{{ sale.total_price }}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded-lg text-xs font-semibold 
+                                {% if sale.order_status == 'paid' %}bg-green-100 text-green-700
+                                {% elif sale.order_status == 'pending' %}bg-amber-100 text-amber-500
+                                {% else %}bg-red-100 text-red-700{% endif %}">
+                                {{ sale.order_status }}
+                            </span>
+                        </td>
+                        
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="p-4 text-center text-gray-600">No sales yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<h2>Sold Items</h2>
+<a href="{% url "food:food_list" %}">back</a>
+<br><br>
+<table border="1">
+    <tr>
+        <th>Buyer</th>
+        <th>Food Item</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Status</th>
+    </tr>
+    {% for sale in sales %}
+    <tr>
+        <td>{{ sale.user.username }}</td>  <!-- Buyer -->
+        <td>{{ sale.food_item.name }}</td>  <!-- Food Name -->
+        <td>{{ sale.quantity }}</td>  <!-- Quantity Ordered -->
+        <td>₹{{ sale.total_price }}</td>  <!-- Total Price -->
+        <td>{{ sale.order_status }}</td>  <!-- Order Status -->
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No sales yet.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %} {% endcomment %}

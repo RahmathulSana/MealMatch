@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-50">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-md text-center">
+
+        <!-- Food Name -->
+        <h2 class="text-2xl font-bold text-green-800 mb-4">{{ food_item.Item_name }}</h2>
+
+        <!-- Food Image -->
+        {% if food_item.photo %}
+            <img src="{{ food_item.photo.url }}" 
+                 alt="{{ food_item.Item_name }}" 
+                 class="w-full h-1/4 object-cover rounded-lg shadow-md mb-4">
+        {% else %}
+            <p class="text-gray-500 italic mb-4">No image available.</p>
+        {% endif %}
+
+        <!-- Food Details -->
+        <p class="text-lg text-gray-700"><strong>Quantity:</strong> {{ food_item.quantity }}</p>
+        <p class="text-lg text-gray-700"><strong>Price:</strong> ₹{{ food_item.price }}</p>
+        <p class="text-lg text-gray-700"><strong>Location:</strong> {{ food_item.location }}</p>
+
+        <!-- Buttons (Minimal Width) -->
+        <div class="mt-6 flex justify-center gap-3">
+            <a href="{% url 'food:update_food' food_item.id %}" 
+               class="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-600 transition">
+               ✏️ Update
+            </a>
+
+            <a href="{% url 'food:delete_food' food_item.id %}"  
+               onclick="return confirm('Are you sure you want to remove this item?');"
+               class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-red-600 transition">
+               🗑️ Remove
+            </a>
+        </div>
+
+        <!-- Back Button -->
+        <a href="{% url 'food:food_list' %}" 
+           class="mt-4 inline-block text-green-700 font-semibold text-sm hover:text-green-900 transition">
+           ← Back to your food items
+        </a>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ food_item.name }}</h2>
+<a href="{% url 'food:update_food' food_item.id %}">Update</a>
+
+<a href="{% url 'food:delete_food' food_item.id %}"  
+   onclick="return confirm('Are you sure you want to remove this item?');">
+   Remove
+</a>
+<p><strong>Quantity:</strong> {{ food_item.quantity }}</p>
+<p><strong>Price:</strong> {{ food_item.price }}</p>
+<p><strong>Location:</strong> {{ food_item.location }}</p>
+{% if food_item.photo %}
+    <img src="{{ food_item.photo.url }}" alt="{{ food_item.name }}" width="200">
+{% else %}
+    <p>No image available.</p>
+{% endif %}
+<br>
+<a href="{% url 'food:food_list' %}">Back to your food items</a>
+{% endblock %} {% endcomment %}

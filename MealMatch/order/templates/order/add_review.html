@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 p-4">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Add Your Review</h2>
+        
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Rating</label>
+                <select name="rating" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                    <option value="" disabled selected>Select rating</option>
+                    <option value="5">⭐️⭐️⭐️⭐️⭐️ (5)</option>
+                    <option value="4">⭐️⭐️⭐️⭐️ (4)</option>
+                    <option value="3">⭐️⭐️⭐️ (3)</option>
+                    <option value="2">⭐️⭐️ (2)</option>
+                    <option value="1">⭐️ (1)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Comment</label>
+                <textarea name="comment" rows="4"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                          placeholder="Share your experience..."></textarea>
+            </div>
+            
+            <div class="flex justify-between pt-4">
+                <a href="{% url 'order:order_detail' order.id %}" 
+                   class="text-amber-600 hover:text-amber-800 hover:underline self-center">
+                    ← Cancel
+                </a>
+                <button type="submit" 
+                        class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg transition">
+                    Submit Review
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% comment %} <h2>Review {{ food.name }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required> <br><br>
+
+    <label for="comment">Your Review:</label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50" required></textarea> <br><br>
+
+    <button type="submit">Submit Review</button>
+</form> {% endcomment %}

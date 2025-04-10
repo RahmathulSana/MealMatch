@@ -1,0 +1,176 @@
+
+
+
+
+ {% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<title>Browse Food Items</title>
+{% endblock head %}
+
+{% block content %}
+<div class="min-h-screen  bg-gray-50 p-4">
+    <!-- Header with profile icon and leaf space -->
+    <div class="flex justify-between items-start mb-6">
+       <!-- Space for leaf image (left side) -->
+ <div>  <!-- Increased width and height -->
+   
+</div> 
+
+       
+        
+        <!-- Profile Icon (right side) -->
+        <div class="relative">
+            <button onclick="toggleProfileMenu()" class="focus:outline-none">
+                <img src="{% static 'images/profile.jpg' %}" alt="Profile" 
+                     class="w-10 h-10 rounded-full object-cover border-2 border-amber-500 shadow-md">
+            </button>
+            
+            <!-- Pop-up Menu -->
+            <div id="profile-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <div class="px-4 py-2 border-b">
+                    <p class="text-sm font-medium text-gray-900">{{ user.username }}</p>
+                    <p class="text-xs text-gray-500">{{ user.email }}</p>
+                </div>
+                <a href="{% url 'order:my_orders' %}" 
+                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">My Orders</a>
+                <a href="{% url 'users:logout' %}" 
+                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Title -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Browse Food Items</h2>
+
+    <!-- Updated Search Bar with spacing and rounded button -->
+    <form method="GET" action="{% url 'order:browse_food' %}" class="mb-6 max-w-md mx-auto">
+        <div class="flex items-center gap-4">  <!-- Added gap between input and button -->
+            <input type="text" name="search" placeholder="Search food..." value="{{ query|default:'' }}"
+                   class="flex-grow px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+            <button type="submit" 
+                    class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-1.5 text-sm rounded-xl transition">  <!-- Changed to rounded-full -->
+                Search
+            </button>
+        </div>
+    </form>
+
+    <!-- Food Items Grid - 4 items per row -->
+    {% if food_items %}
+    {% comment %} <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">  <!-- Changed to 4 columns --> {% endcomment %}
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6 px-4">
+
+        {% for food in food_items %}
+        <div class="bg-white px-2 py-3 rounded-xl shadow-xl hover:shadow-md transition">
+            <div class="flex flex-col items-center text-center">
+                <img src="{{ food.photo.url }}" alt="{{ food.Item_name }}" 
+                     class="w-20 h-20 object-cover rounded-full mb-2 border-4 border-green-300">
+                <h3 class="text-md font-semibold text-gray-800 mb-1">{{ food.Item_name }}</h3>
+                <div class="flex justify-between w-full mb-2 text-xs">
+                    <span class="bg-black text-white px-2 py-0.5 rounded-md">₹{{ food.price }}</span>
+                    <span class="text-gray-500">Qty: {{ food.quantity }}</span>
+                </div>
+                <a href="{% url 'order:food_detail' food.id %}" 
+                   class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 text-xs rounded-md transition">
+                    View
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-gray-500 py-8">No food items found.</p>
+    {% endif %}
+</div>
+
+<!-- JavaScript for Profile Menu Toggle -->
+<script>
+    function toggleProfileMenu() {
+        var menu = document.getElementById("profile-menu");
+        menu.classList.toggle("hidden");
+    }
+
+    // Close the menu if clicked outside
+    document.addEventListener("click", function(event) {
+        var menu = document.getElementById("profile-menu");
+        var profileBtn = document.querySelector("button[onclick='toggleProfileMenu()']");
+        
+        if (!menu.contains(event.target) && !profileBtn.contains(event.target)) {
+            menu.classList.add("hidden");
+        }
+    });
+</script>
+{% endblock content %}
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block content %}
+
+<!-- Profile Icon -->
+<div class="profile-container" onclick="toggleProfileMenu()">
+    <img src="{% static 'images/profile.jpg' %}" alt="Profile" class="profile-pic">
+</div>
+
+<!-- Pop-up Menu -->
+<div id="profile-menu" class="profile-menu">
+    <p><strong>{{ user.username }}</strong></p>
+    <p>{{ user.email }}</p>
+    <hr>
+    <a href="{% url 'order:my_orders' %}">My Orders</a>
+    <a href="{% url 'users:logout' %}">Logout</a>
+</div>
+
+<h2>Browse Food Items</h2>
+
+<!-- Search Bar -->
+<form method="GET" action="{% url 'order:browse_food' %}">
+    <input type="text" name="search" placeholder="Search for food..." value="{{ query|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
+<!-- Display Food Items -->
+{% if food_items %}
+    <ul>
+        {% for food in food_items %}
+            <li>
+                <img src="{{ food.photo.url }}" alt="{{ food.name }}" width="100"> <br>
+                <strong>{{ food.name }}</strong> <br>
+                <p>{{ food.price }}</p>
+                <a href="{% url 'order:food_detail' food.id %}">View</a>
+                <br> <br>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No food items found.</p>
+{% endif %}
+
+<!-- JavaScript for Profile Menu Toggle -->
+<script>
+    function toggleProfileMenu() {
+        var menu = document.getElementById("profile-menu");
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    // Close the menu if clicked outside
+    document.addEventListener("click", function(event) {
+        var menu = document.getElementById("profile-menu");
+        var profileContainer = document.querySelector(".profile-container");
+
+        if (!menu.contains(event.target) && !profileContainer.contains(event.target)) {
+            menu.style.display = "none";
+        }
+    });
+</script>
+
+{% endblock content %} {% endcomment %}
