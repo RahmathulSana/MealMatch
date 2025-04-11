@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from food.models import FoodItem  # Import FoodItem from the food app
+from food.models import FoodItem  
 from django.contrib.auth.models import User
 from datetime import timedelta
 from django.utils.timezone import now
@@ -10,7 +10,7 @@ from django.utils.timezone import now
 class Review(models.Model):
     food = models.ForeignKey(FoodItem, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, editable=False)
-    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])  # Rating from 1 to 5
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)]) 
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -22,7 +22,7 @@ class Review(models.Model):
 ORDER_STATUS = [
     ('pending', 'Pending'),
     ('paid', 'Paid'),
-    ('canceled', 'Canceled'),
+    ('cancelled', 'Cancelled'),
 ]
 
 class OrderDetail(models.Model):
@@ -50,7 +50,7 @@ class OrderDetail(models.Model):
     def cancel_order(self):
      """Cancels the order if within 1 hour"""
      if self.can_cancel():
-        self.order_status = 'canceled'
+        self.order_status = 'cancelled'
         self.save()
         return True
      return False

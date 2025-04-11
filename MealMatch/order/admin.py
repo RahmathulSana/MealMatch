@@ -3,13 +3,13 @@ from .models import Review,OrderDetail
 
 # Register your models here.
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('food', 'user', 'rating', 'created_at')  # Display key review details
-    search_fields = ('food__name', 'user__username', 'comment')  # Search food name, user, and comment
-    list_filter = ('rating', 'created_at')  # Allow filtering by rating and creation date
+    list_display = ('food', 'user', 'rating', 'created_at')  
+    search_fields = ('food__name', 'user__username', 'comment') 
+    list_filter = ('rating', 'created_at')
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(user__role='buyer')  # Only show buyers' reviews
+        return qs.filter(user__role='buyer')
     
 admin.site.register(Review, ReviewAdmin)
 

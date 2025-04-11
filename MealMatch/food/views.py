@@ -33,7 +33,7 @@ def add_food_item(request):
 @login_required
 @user_passes_test(is_seller, login_url='users:login', redirect_field_name=None)
 def food_list(request):
-    food_items = FoodItem.objects.filter(seller=request.user)  
+    food_items = FoodItem.objects.filter(seller=request.user).order_by('-created_at')  
     return render(request, 'food/food_list.html', {'food_items': food_items})
 
 @login_required
